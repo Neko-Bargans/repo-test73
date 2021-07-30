@@ -1,0 +1,63 @@
+<project xmlns = "http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>com.finaxys</groupId>
+   <artifactId>my-app2</artifactId>
+   <version>1.0</version>
+   <dependencies>
+	<dependency><groupId>info.cukes</groupId><artifactId>cucumber-java</artifactId><version>1.2.6</version></dependency>
+   </dependencies>
+<build>
+    <plugins>
+	<!-- Maven Artifactory plugin for deploying -->
+        <plugin>
+            <groupId>org.jfrog.buildinfo</groupId>
+            <artifactId>artifactory-maven-plugin</artifactId>
+            <version>3.2.3</version>
+            <inherited>false</inherited>
+            <executions>
+                <execution>
+                    <id>build-info</id>
+                    <goals>
+                        <goal>publish</goal>
+                    </goals>
+                    <configuration>
+                        <deployProperties>
+                            <gradle>awesome</gradle>
+                            <review.team>qa</review.team>
+			    <groupId>${project.groupId}</groupId>
+			    <artifactId>${project.artifactId}</artifactId>
+			    <version>${project.version}</version>
+                        </deployProperties>
+			<artifactory>
+			  <!--<envVarsExcludePatterns> </envVarsExcludePatterns>
+			  <envVarsIncludePatterns></envVarsIncludePatterns>
+			  <includeEnvVars>true/false</includeEnvVars>
+			  <timeoutSec>N</timeoutSec>-->
+			</artifactory>
+                        <publisher>
+                            <contextUrl>http://172.16.3.110:8081/artifactory</contextUrl>
+                            <username>admin</username>
+                            <password>AP6H57hyxhBUFnSsx6jBSkgAVCW</password>
+                            <repoKey>maven-repo</repoKey>
+                            <snapshotRepoKey>maven-repo</snapshotRepoKey>
+			    <!--<publishArtifacts>true/false</publishArtifacts>
+			    <publishBuildInfo>true/false</publishBuildInfo>
+			    <excludePatterns> .. </excludePatterns>
+			    <includePatterns> .. </includePatterns>
+			    <filterExcludedArtifactsFromBuild>true/false</filterExcludedArtifactsFromBuild>-->
+			    <!-- If true build information published to Artifactory will include implicit project as well as build-time dependencies -->
+			    <!--<recordAllDependencies>true/false</recordAllDependencies>-->
+			    <!-- Minimum file size in KB for which the plugin performs checksum deploy optimization. Default: 10. Set to 0 to disable uploading files with checksum that already exists in Artifactory. -->
+			    <!--<minChecksumDeploySizeKb>10</minChecksumDeploySizeKb>-->
+                        </publisher>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+</project>
